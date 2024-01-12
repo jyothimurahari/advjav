@@ -1,0 +1,39 @@
+public class SimpleJoinExample {
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println("Thread 1: " + i);
+                try {
+                    Thread.sleep(1000); // Simulate some work
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println("Thread 2: " + i);
+                try {
+                    Thread.sleep(1000); // Simulate some work
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            // Wait for both threads to finish
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Both threads have finished. Now, continuing with the main thread.");
+    }
+}
+In this example, we have two threads (thread1 and thread2) that print numbers from 1 to 5 with a 1-second delay between each print. After starting both threads, we use the join() method on both threads to ensure that the main thread waits for both thread1 and thread2 to complete their execution before printing "Both threads have finished. Now, continuing with the main thread." This way, we ensure that the main thread doesn't proceed until both threads have finished their work.
